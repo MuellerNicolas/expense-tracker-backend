@@ -1,9 +1,12 @@
 package com.expensetracker.expensetracker;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 
 @SpringBootApplication
+
 public class ExpenseTrackerApplication {
 
 	public static void main(String[] args) {
