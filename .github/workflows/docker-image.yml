@@ -24,7 +24,7 @@ jobs:
       packages: write
       contents: read
     env:
-      REPO: MuellerNicolas/expense-tracker-backend
+      REPO: muellernicolas/expense-tracker-backend
 
     steps:
       - name: Check out the repo
