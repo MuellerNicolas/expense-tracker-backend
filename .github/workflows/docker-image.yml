@@ -40,5 +40,5 @@ jobs:
         with:
           push: true
           tags: |
-            docker.pkg.github.com/${{ env.REPO }}/octo-image:${{ github.sha }}
-            docker.pkg.github.com/${{ env.REPO }}/octo-image:${{ github.ref }}
+            docker.pkg.github.com/muellernicolas/expense-tracker-backend:latest
+           
