@@ -23,6 +23,9 @@ jobs:
     permissions:
       packages: write
       contents: read
+    env:
+      REPO: MuellerNicolas/expense-tracker-backend
+
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
@@ -37,5 +40,5 @@ jobs:
         with:
           push: true
           tags: |
-            docker.pkg.github.com/expense-tracker-backend/octo-image:${{ github.sha }}
-            docker.pkg.github.com/expense-tracker-backend/octo-image:${{ github.ref }}
+            docker.pkg.github.com/${{ env.REPO }}/octo-image:${{ github.sha }}
+            docker.pkg.github.com/${{ env.REPO }}/octo-image:${{ github.ref }}
