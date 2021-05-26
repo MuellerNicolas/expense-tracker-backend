@@ -4,35 +4,25 @@ package com.expensetracker.expensetracker;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(collection = "expenses")
 public class Expense {
 
     @Id
-    private String id;
-    private String name;
+    public String expenseID;
+    public Date datum;
+    public String name;
+    public Double betrag;
+    public String kategorieID;
+    public String userID;
 
-    public Expense() {
-
-    }
-
-    public Expense(String id, String name) {
-        this.id = id;
+    public Expense(Date datum, String name, Double betrag, String kategorieID, String userID) {
+               this.datum = datum;
         this.name = name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+        this.betrag = betrag;
+        this.kategorieID = kategorieID;
+        this.userID = userID;
     }
 }
+

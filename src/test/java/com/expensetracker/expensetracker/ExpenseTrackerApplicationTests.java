@@ -10,4 +10,9 @@ class ExpenseTrackerApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void saveExpense() {
+
+	}
+
 }
