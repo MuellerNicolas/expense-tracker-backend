@@ -2,6 +2,7 @@ package com.expensetracker.expensetracker;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +13,9 @@ public class ExpenseService implements ExpenseServiceInterface {
     @Autowired
     private ExpenseRepository expenseRepository;
 
-
     @Override
-    public List<Expense> findAll() {
-        return expenseRepository.findAll();
+    public List<Expense> findLatestExpenses() {
+        return expenseRepository.findTop10ByOrderByDatumDesc();
     }
 
     @Override

@@ -17,7 +17,7 @@ public class ExpenseRestController {
 
     @GetMapping(value = "/")
     public List<Expense> getAllExpenses() {
-        return expenseService.findAll();
+        return expenseService.findLatestExpenses();
     }
 
     @PostMapping(value = "/save")

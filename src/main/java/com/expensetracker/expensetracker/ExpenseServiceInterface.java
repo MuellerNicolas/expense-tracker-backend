@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ExpenseServiceInterface {
 
-    List<Expense> findAll();
+    List<Expense> findLatestExpenses();
 
     Expense saveOrUpdateExpense(Expense expense);
 

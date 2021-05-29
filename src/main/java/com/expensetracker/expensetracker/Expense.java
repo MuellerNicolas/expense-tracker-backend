@@ -10,7 +10,7 @@ import java.util.Date;
 public class Expense {
 
     @Id
-    public String expenseID;
+    public String id;
     public Date datum;
     public String name;
     public Double betrag;
