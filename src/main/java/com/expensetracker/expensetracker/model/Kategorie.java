@@ -1,4 +1,4 @@
-package com.expensetracker.expensetracker;
+package com.expensetracker.expensetracker.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -11,8 +11,8 @@ public class Kategorie {
     String kategorieName;
     Double budget;
 
-    public Kategorie(String kategorieID, String kategorieName, Double budget) {
-        this.kategorieID = kategorieID;
+    public Kategorie(String kategorieId, String kategorieName, Double budget) {
+        this.kategorieID = kategorieId;
         this.kategorieName = kategorieName;
         this.budget = budget;
     }

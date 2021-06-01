@@ -1,4 +1,4 @@
-package com.expensetracker.expensetracker;
+package com.expensetracker.expensetracker.model;
 
 
 import org.springframework.data.annotation.Id;
@@ -10,19 +10,19 @@ import java.util.Date;
 public class Expense {
 
     @Id
-    public String id;
+    public String expenseId;
     public Date datum;
     public String name;
     public Double betrag;
-    public String kategorieID;
-    public String userID;
+    public String kategorieId;
+    public String userId;
 
-    public Expense(Date datum, String name, Double betrag, String kategorieID, String userID) {
+    public Expense(Date datum, String name, Double betrag, String kategorieId, String userId) {
                this.datum = datum;
         this.name = name;
         this.betrag = betrag;
-        this.kategorieID = kategorieID;
-        this.userID = userID;
+        this.kategorieId = kategorieId;
+        this.userId = userId;
     }
 }
 
