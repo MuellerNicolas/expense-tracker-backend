@@ -2,7 +2,7 @@ package com.expensetracker.expensetracker.controller;
 
 
 import com.expensetracker.expensetracker.model.Expense;
-import com.expensetracker.expensetracker.service.ExpenseService;
+import com.expensetracker.expensetracker.service.expense.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
