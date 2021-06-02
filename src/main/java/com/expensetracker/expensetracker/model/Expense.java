@@ -5,33 +5,32 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Document(collection = "expenses")
 public class Expense {
 
     @Id
-    public String expenseId;
+    public String id;
     public LocalDateTime datum;
     public String name;
     public Double betrag;
-    public String kategorieId;
+    public String kategorie;
     public String userId;
 
-    public Expense(LocalDateTime datum, String name, Double betrag, String kategorieId, String userId) {
+    public Expense(LocalDateTime datum, String name, Double betrag, String kategorie, String userId) {
         this.datum = datum;
         this.name = name;
         this.betrag = betrag;
-        this.kategorieId = kategorieId;
+        this.kategorie = kategorie;
         this.userId = userId;
     }
 
-    public String getExpenseId() {
-        return expenseId;
+    public String getId() {
+        return id;
     }
 
-    public void setExpenseId(String expenseId) {
-        this.expenseId = expenseId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public LocalDateTime getDatum() {
@@ -58,12 +57,12 @@ public class Expense {
         this.betrag = betrag;
     }
 
-    public String getKategorieId() {
-        return kategorieId;
+    public String getKategorie() {
+        return kategorie;
     }
 
-    public void setKategorieId(String kategorieId) {
-        this.kategorieId = kategorieId;
+    public void setKategorie(String kategorie) {
+        this.kategorie = kategorie;
     }
 
     public String getUserId() {

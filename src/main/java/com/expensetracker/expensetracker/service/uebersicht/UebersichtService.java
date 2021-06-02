@@ -10,12 +10,9 @@ import com.expensetracker.expensetracker.repository.ExpenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
-import java.time.Year;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,10 +39,10 @@ public class UebersichtService implements UebersichtServiceInterface {
 
         for(Budget budget : budgetList) {
 
-            List<Expense> ongoingMonthYearFilteredByKategorieList = ongoingMonthYearList.stream().filter(expense -> expense.kategorieId == budget.kategorieId).collect(Collectors.toList());
+            List<Expense> ongoingMonthYearFilteredByKategorieList = ongoingMonthYearList.stream().filter(expense -> expense.kategorie == budget.kategorie).collect(Collectors.toList());
             double value = ongoingMonthYearFilteredByKategorieList.stream().map(expense -> expense.getBetrag()).collect(Collectors.summingDouble(Double::doubleValue));
 
-            ausgabeJeKategorieAktuellerMonatDTOList.add(new AusgabeJeKategorieAktuellerMonatDTO(budget.kategorieName, value));
+            ausgabeJeKategorieAktuellerMonatDTOList.add(new AusgabeJeKategorieAktuellerMonatDTO(budget.kategorie, value));
         }
 
         return ausgabeJeKategorieAktuellerMonatDTOList;
@@ -68,12 +65,12 @@ public class UebersichtService implements UebersichtServiceInterface {
 
             for(Budget budget : budgetList) {
 
-                List<Expense> ongoingMonthYearFilteredByKategorieList = adjustedMonthYearList.stream().filter(expense -> expense.kategorieId == budget.kategorieId).collect(Collectors.toList());
+                List<Expense> ongoingMonthYearFilteredByKategorieList = adjustedMonthYearList.stream().filter(expense -> expense.kategorie == budget.kategorie).collect(Collectors.toList());
                 double value = ongoingMonthYearFilteredByKategorieList.stream().map(expense -> expense.getBetrag()).collect(Collectors.summingDouble(Double::doubleValue));
 
                 ausgabeJeKategorieMonatList.add(new AusgabeJeKategorieAktuellerMonatDTO(adjustedDateTime.toString(), value));
 
-                ausgabeJeKategorieHalbesJahrDTOList.add(new AusgabeJeKategorieHalbesJahrDTO(budget.kategorieName, ausgabeJeKategorieMonatList));
+                ausgabeJeKategorieHalbesJahrDTOList.add(new AusgabeJeKategorieHalbesJahrDTO(budget.kategorie, ausgabeJeKategorieMonatList));
             }
         }
 
@@ -95,7 +92,7 @@ public class UebersichtService implements UebersichtServiceInterface {
 
         for(Budget budget : budgetList) {
 
-            List<Expense> ongoingMonthYearFilteredByKategorieList = ongoingMonthYearList.stream().filter(expense -> expense.kategorieId == budget.kategorieId).collect(Collectors.toList());
+            List<Expense> ongoingMonthYearFilteredByKategorieList = ongoingMonthYearList.stream().filter(expense -> expense.kategorie == budget.kategorie).collect(Collectors.toList());
             double value = ongoingMonthYearFilteredByKategorieList.stream().map(expense -> expense.getBetrag()).collect(Collectors.summingDouble(Double::doubleValue));
 
             Double percentage = 0d;
@@ -111,7 +108,7 @@ public class UebersichtService implements UebersichtServiceInterface {
             }
 
             
-            budgetauslastungJeKategorieAktuellerMonatList.add(new AusgabeJeKategorieAktuellerMonatDTO(budget.kategorieName, percentage));
+            budgetauslastungJeKategorieAktuellerMonatList.add(new AusgabeJeKategorieAktuellerMonatDTO(budget.kategorie, percentage));
         }
 
         return budgetauslastungJeKategorieAktuellerMonatList;

@@ -7,14 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Budget {
 
     @Id
-    public String kategorieId;
-    public String kategorieName;
+    public String kategorie;
     public Double budget;
     public String userId;
 
-    public Budget(String kategorieId, String kategorieName, Double budget, String userId) {
-        this.kategorieId = kategorieId;
-        this.kategorieName = kategorieName;
+    public Budget(String kategorie, Double budget, String userId) {
+        this.kategorie = kategorie;
         this.budget = budget;
         this.userId = userId;
     }
