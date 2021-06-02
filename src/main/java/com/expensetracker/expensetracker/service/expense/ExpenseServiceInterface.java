@@ -3,6 +3,7 @@ package com.expensetracker.expensetracker.service.expense;
 import com.expensetracker.expensetracker.model.Expense;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ExpenseServiceInterface {
 
@@ -10,7 +11,7 @@ public interface ExpenseServiceInterface {
 
     Expense saveOrUpdateExpense(Expense expense);
 
-    Expense findExpenseById(String expenseId);
+    Optional<Expense> findExpenseById(String expenseId);
 
     void deleteExpenseById(String expenseId);
 }

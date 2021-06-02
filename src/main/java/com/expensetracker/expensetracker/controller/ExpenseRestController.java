@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/ausgaben")
@@ -23,7 +24,7 @@ public class ExpenseRestController {
     }
 
     @GetMapping(value = "{expenseId}")
-    public Expense getExpenseById (@PathVariable("expenseId") String expenseId) {
+    public Optional<Expense> getExpenseById (@PathVariable("expenseId") String expenseId) {
         return expenseService.findExpenseById(expenseId);
     }
 

@@ -4,6 +4,7 @@ import com.expensetracker.expensetracker.model.Expense;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ExpenseRepository extends MongoRepository<Expense, String> {
 
@@ -11,9 +12,10 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
 
     List<Expense> findByUserId(String userId);
 
-    Expense findByExpenseId(String expenseId);
+    @Override
+    Optional<Expense> findById(String id);
 
     @Override
-    void deleteById(String expenseId);
+    void deleteById(String id);
 
 }
