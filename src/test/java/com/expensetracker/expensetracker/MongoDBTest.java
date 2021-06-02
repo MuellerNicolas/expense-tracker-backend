@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -28,7 +30,7 @@ public class MongoDBTest {
     @BeforeEach
     public void dataSetup() {
 
-        expenseToSave = new Expense(new Date(), "Fahrrad", 1600d, "1", "1" );
+        expenseToSave = new Expense(LocalDateTime.now(), "Fahrrad", 1600d, "1", "1" );
 
     }
 
