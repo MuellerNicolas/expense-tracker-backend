@@ -8,12 +8,12 @@ public class Budget {
 
     @Id
     public String budgetId;
-    public String kategorieName;
+    public String kategorie;
     public Double budget;
     public String userId;
 
-    public Budget(String kategorieName, Double budget, String userId) {
-        this.kategorieName = kategorieName;
+    public Budget(String kategorie, Double budget, String userId) {
+        this.kategorie = kategorie;
         this.budget = budget;
         this.userId = userId;
     }
@@ -26,12 +26,12 @@ public class Budget {
         this.budgetId = budgetId;
     }
 
-    public String getKategorieName() {
-        return kategorieName;
+    public String getKategorie() {
+        return kategorie;
     }
 
-    public void setKategorieName(String kategorieName) {
-        this.kategorieName = kategorieName;
+    public void setKategorie(String kategorie) {
+        this.kategorie = kategorie;
     }
 
     public Double getBudget() {
