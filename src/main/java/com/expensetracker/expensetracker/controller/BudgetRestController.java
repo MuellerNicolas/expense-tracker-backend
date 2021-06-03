@@ -24,14 +24,12 @@ public class BudgetRestController {
 
     @PostMapping(value = "/")
     public Budget saveBudget(@RequestBody Budget budget) {
-        budgetService.saveOrUpdateBudget(budget);
-        return budget;
+        return budgetService.saveOrUpdateBudget(budget);
     }
 
     @PutMapping(value = "{kategorieId}")
-    public ResponseEntity<?> UpdateExpenseById(@PathVariable("kategorieId") String kategorieId, @RequestBody Budget budget) {
-        budgetService.saveOrUpdateBudget(budget);
-        return new ResponseEntity("Budget updated successfully", HttpStatus.OK);
+    public Budget UpdateExpenseById(@PathVariable("kategorieId") String kategorieId, @RequestBody Budget budget) {
+        return budgetService.saveOrUpdateBudget(budget);
     }
 
 

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,21 +30,19 @@ public class ExpenseRestController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> saveExpense(@RequestBody Expense expense) {
-        expenseService.saveOrUpdateExpense(expense);
-        return new ResponseEntity("Expense added successfully", HttpStatus.OK);
+    public Expense saveExpense(@RequestBody Expense expense) {
+        return expenseService.saveOrUpdateExpense(expense);
     }
 
     @PutMapping(value = "{expenseId}")
-    public ResponseEntity<?> UpdateExpenseById(@PathVariable("expenseId") String expenseId, @RequestBody Expense expense) {
-        expenseService.saveOrUpdateExpense(expense);
-        return new ResponseEntity("Expense updated successfully", HttpStatus.OK);
+    public Expense UpdateExpenseById(@PathVariable("expenseId") String expenseId, @RequestBody Expense expense) {
+        return expenseService.saveOrUpdateExpense(expense);
     }
 
     @DeleteMapping(value = "{expenseId}")
-    public ResponseEntity<?> deleteExpenseById (@PathVariable("expenseId") String expenseId) {
+    public Expense deleteExpenseById (@PathVariable("expenseId") String expenseId) {
         expenseService.deleteExpenseById(expenseId);
-        return new ResponseEntity("Expense deleted successfully", HttpStatus.OK);
+        return new Expense(LocalDateTime.now(), "1", 1d, "1", "1" );
     }
 
 }
