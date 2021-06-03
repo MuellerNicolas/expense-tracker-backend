@@ -24,7 +24,7 @@ public class ExpenseRestController {
     }
 
     @GetMapping(value = "{expenseId}")
-    public Optional<Expense> getExpenseById (@PathVariable("expenseId") String expenseId) {
+    public Expense getExpenseById (@PathVariable("expenseId") String expenseId) {
         return expenseService.findExpenseById(expenseId);
     }
 

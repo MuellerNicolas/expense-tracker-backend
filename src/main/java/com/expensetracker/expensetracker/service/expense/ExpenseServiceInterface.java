@@ -11,7 +11,7 @@ public interface ExpenseServiceInterface {
 
     Expense saveOrUpdateExpense(Expense expense);
 
-    Optional<Expense> findExpenseById(String expenseId);
+    Expense findExpenseById(String expenseId);
 
     void deleteExpenseById(String expenseId);
 }

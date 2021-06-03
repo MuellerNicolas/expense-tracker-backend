@@ -26,8 +26,8 @@ public class ExpenseService implements ExpenseServiceInterface {
     }
 
     @Override
-    public Optional<Expense> findExpenseById(String id ) {
-        return expenseRepository.findById(id);
+    public Expense findExpenseById(String id ) {
+        return expenseRepository.findByExpenseId(id);
     }
 
     @Override

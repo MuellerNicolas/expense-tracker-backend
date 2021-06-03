@@ -12,8 +12,7 @@ public interface ExpenseRepository extends MongoRepository<Expense, String> {
 
     List<Expense> findByUserId(String userId);
 
-    @Override
-    Optional<Expense> findById(String id);
+    Expense findByExpenseId(String id);
 
     @Override
     void deleteById(String id);

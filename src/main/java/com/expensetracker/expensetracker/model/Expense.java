@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class Expense {
 
     @Id
-    public String id;
+    public String expenseId;
     public LocalDateTime datum;
     public String name;
     public Double betrag;
@@ -25,12 +25,12 @@ public class Expense {
         this.userId = userId;
     }
 
-    public String getId() {
-        return id;
+    public String getExpenseId() {
+        return expenseId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setExpenseId(String expenseId) {
+        this.expenseId = expenseId;
     }
 
     public LocalDateTime getDatum() {
