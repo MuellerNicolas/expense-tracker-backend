@@ -1,7 +1,6 @@
 package com.expensetracker.expensetracker.service.budget;
 
 import com.expensetracker.expensetracker.model.Budget;
-import com.expensetracker.expensetracker.model.dto.BudgetDTO;
 import com.expensetracker.expensetracker.repository.BudgetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -23,9 +23,9 @@ public class BudgetRestController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<?> saveBudget(@RequestBody Budget budget) {
+    public Budget saveBudget(@RequestBody Budget budget) {
         budgetService.saveOrUpdateBudget(budget);
-        return new ResponseEntity("Budget added successfully", HttpStatus.OK);
+        return budget;
     }
 
     @PutMapping(value = "{kategorieId}")

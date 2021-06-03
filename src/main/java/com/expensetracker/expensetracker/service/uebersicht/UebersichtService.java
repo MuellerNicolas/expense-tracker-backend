@@ -39,7 +39,7 @@ public class UebersichtService implements UebersichtServiceInterface {
 
         for(Budget budget : budgetList) {
 
-            List<Expense> ongoingMonthYearFilteredByKategorieList = ongoingMonthYearList.stream().filter(expense -> expense.kategorie == budget.kategorie).collect(Collectors.toList());
+            List<Expense> ongoingMonthYearFilteredByKategorieList = ongoingMonthYearList.stream().filter(expense -> expense.kategorie.equals(budget.kategorie)).collect(Collectors.toList());
             double value = ongoingMonthYearFilteredByKategorieList.stream().map(expense -> expense.getBetrag()).collect(Collectors.summingDouble(Double::doubleValue));
 
             ausgabeJeKategorieAktuellerMonatDTOList.add(new AusgabeJeKategorieAktuellerMonatDTO(budget.kategorie, value));
@@ -56,22 +56,27 @@ public class UebersichtService implements UebersichtServiceInterface {
         List<Expense> expenseList = expenseRepository.findByUserId("1");
         List<Budget> budgetList = budgetRepository.findByUserId("1");
 
-        for(int monthOffset = 0; monthOffset < 6; monthOffset++) {
 
-            final LocalDateTime adjustedDateTime = localDateTime.minusMonths(monthOffset);
+        for(Budget budget : budgetList) {
+
             List<AusgabeJeKategorieAktuellerMonatDTO> ausgabeJeKategorieMonatList = new ArrayList<>();
 
-            List<Expense> adjustedMonthYearList = expenseList.stream().filter(expense -> expense.datum.getYear() == adjustedDateTime.getYear() && expense.datum.getMonth() == adjustedDateTime.getMonth()).collect(Collectors.toList());
+            for(int monthOffset = 0; monthOffset < 6; monthOffset++) {
 
-            for(Budget budget : budgetList) {
+                final LocalDateTime adjustedDateTime = localDateTime.minusMonths(monthOffset);
 
-                List<Expense> ongoingMonthYearFilteredByKategorieList = adjustedMonthYearList.stream().filter(expense -> expense.kategorie == budget.kategorie).collect(Collectors.toList());
+                List<Expense> adjustedMonthYearList = expenseList.stream().filter(expense -> expense.datum.getYear() == adjustedDateTime.getYear() && expense.datum.getMonth() == adjustedDateTime.getMonth()).collect(Collectors.toList());
+
+                List<Expense> ongoingMonthYearFilteredByKategorieList = adjustedMonthYearList.stream().filter(expense -> expense.kategorie.equals(budget.kategorie)).collect(Collectors.toList());
                 double value = ongoingMonthYearFilteredByKategorieList.stream().map(expense -> expense.getBetrag()).collect(Collectors.summingDouble(Double::doubleValue));
 
                 ausgabeJeKategorieMonatList.add(new AusgabeJeKategorieAktuellerMonatDTO(adjustedDateTime.toString(), value));
 
-                ausgabeJeKategorieHalbesJahrDTOList.add(new AusgabeJeKategorieHalbesJahrDTO(budget.kategorie, ausgabeJeKategorieMonatList));
+
             }
+
+            ausgabeJeKategorieHalbesJahrDTOList.add(new AusgabeJeKategorieHalbesJahrDTO(budget.kategorie, ausgabeJeKategorieMonatList));
+
         }
 
         return ausgabeJeKategorieHalbesJahrDTOList;
@@ -92,13 +97,13 @@ public class UebersichtService implements UebersichtServiceInterface {
 
         for(Budget budget : budgetList) {
 
-            List<Expense> ongoingMonthYearFilteredByKategorieList = ongoingMonthYearList.stream().filter(expense -> expense.kategorie == budget.kategorie).collect(Collectors.toList());
+            List<Expense> ongoingMonthYearFilteredByKategorieList = ongoingMonthYearList.stream().filter(expense -> expense.kategorie.equals(budget.kategorie)).collect(Collectors.toList());
             double value = ongoingMonthYearFilteredByKategorieList.stream().map(expense -> expense.getBetrag()).collect(Collectors.summingDouble(Double::doubleValue));
 
             Double percentage = 0d;
 
             if (budget.budget != 0) {
-                percentage = value / budget.budget;
+                percentage = value / budget.budget * 100;
             } else {
                 if(value == 0) {
                     percentage = 100d;
