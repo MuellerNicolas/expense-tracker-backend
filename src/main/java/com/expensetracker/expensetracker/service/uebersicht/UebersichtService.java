@@ -64,7 +64,7 @@ public class UebersichtService implements UebersichtServiceInterface {
 
             List<AusgabeJeKategorieAktuellerMonatDTO> ausgabeJeKategorieMonatList = new ArrayList<>();
 
-            for(int monthOffset = 0; monthOffset < 6; monthOffset++) {
+            for(int monthOffset = 5; monthOffset >= 0; monthOffset--) {
 
                 final LocalDateTime adjustedDateTime = localDateTime.minusMonths(monthOffset);
 
