@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Rest-Service for Budget-Tab in Expense-Tracker
+ */
 @RestController
 @RequestMapping("/api/budgets")
 public class BudgetRestController {

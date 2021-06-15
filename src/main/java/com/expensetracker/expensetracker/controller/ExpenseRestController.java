@@ -4,14 +4,14 @@ package com.expensetracker.expensetracker.controller;
 import com.expensetracker.expensetracker.model.Expense;
 import com.expensetracker.expensetracker.service.expense.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * Rest-Service for Ausgaben-Tab in Expense-Tracker
+ */
 @RestController
 @RequestMapping("/api/ausgaben")
 public class ExpenseRestController {
@@ -35,7 +35,7 @@ public class ExpenseRestController {
     }
 
     @PutMapping(value = "{expenseId}")
-    public Expense UpdateExpenseById(@PathVariable("expenseId") String expenseId, @RequestBody Expense expense) {
+    public Expense updateExpenseById(@PathVariable("expenseId") String expenseId, @RequestBody Expense expense) {
         return expenseService.saveOrUpdateExpense(expense);
     }
 

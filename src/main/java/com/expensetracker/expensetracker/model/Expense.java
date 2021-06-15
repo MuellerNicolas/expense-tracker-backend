@@ -11,6 +11,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
+/**
+ * Model for Expense in Expense-Tracker
+ */
 @Document(collection = "expenses")
 public class Expense {
 

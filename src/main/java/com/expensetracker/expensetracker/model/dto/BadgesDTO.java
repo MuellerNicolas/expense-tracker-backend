@@ -1,5 +1,8 @@
 package com.expensetracker.expensetracker.model.dto;
 
+/**
+ * DataTypeObject for displaying badges per kategorie. Badges displaying total of months within budget.
+ */
 public class BadgesDTO {
 
     public String id;

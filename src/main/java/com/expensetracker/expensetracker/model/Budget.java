@@ -3,6 +3,9 @@ package com.expensetracker.expensetracker.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Model for Budget in Expense-Tracker
+ */
 @Document(collection = "budgets")
 public class Budget {
 

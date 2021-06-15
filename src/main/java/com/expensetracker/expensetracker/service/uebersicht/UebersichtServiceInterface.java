@@ -6,6 +6,9 @@ import com.expensetracker.expensetracker.model.dto.AusgabeJeKategorieHalbesJahrD
 
 import java.util.List;
 
+/**
+ *  Service-Interface for Uebersicht-Tab in Expense-Tracker
+ */
 public interface UebersichtServiceInterface {
 
     List<AusgabeJeKategorieAktuellerMonatDTO> findAusgabeJeKategorieAktuellerMonat(String userId);

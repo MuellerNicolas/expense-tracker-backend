@@ -2,6 +2,9 @@ package com.expensetracker.expensetracker.model.dto;
 
 import java.util.List;
 
+/**
+ * DataTypeObject for displaying expenses per kategorie in the past 6 months
+ */
 public class AusgabeJeKategorieHalbesJahrDTO {
 
     public String name;

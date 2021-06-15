@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Rest-Service for Erfolge-Tab in Expense-Tracker
+ */
 @RestController
 @RequestMapping("/api")
 public class ErfolgeRestController {
