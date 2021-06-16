@@ -1,12 +1,12 @@
 package com.expensetracker.expensetracker;
 
+
+import com.github.cloudyrock.spring.v5.EnableMongock;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 
 @SpringBootApplication
-
+@EnableMongock
 public class ExpenseTrackerApplication {
 
 	public static void main(String[] args) {

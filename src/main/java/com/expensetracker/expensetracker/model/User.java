@@ -12,26 +12,26 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    private String userID;
+    private String userId;
     private String name;
     private String password;
     private String email;
     private LocalDateTime datumCreated;
 
-    public User(String userID, String name, String password, String email, LocalDateTime datumCreated) {
-        this.userID = userID;
+    public User(String userId, String name, String password, String email, LocalDateTime datumCreated) {
+        this.userId = userId;
         this.name = name;
         this.password = password;
         this.email = email;
         this.datumCreated = datumCreated;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getName() {

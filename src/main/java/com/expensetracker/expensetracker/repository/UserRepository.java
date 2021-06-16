@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 /**
  * Repository for User in Expense-Tracker
  */
-public interface UserRepository extends MongoRepository<Expense, String> {
+public interface UserRepository extends MongoRepository<User, String> {
 
     User findByUserId(String userId);
 
