@@ -11,8 +11,10 @@ import com.expensetracker.expensetracker.service.erfolge.ErfolgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,17 +41,17 @@ public class UebersichtService implements UebersichtServiceInterface {
         // Initialize target expense per kategorie list
         List<AusgabeJeKategorieAktuellerMonatDTO> ausgabeJeKategorieAktuellerMonatDTOList = new ArrayList<>();
 
-        // Get Local DateTime as starting point for Month Offset Calculation
-        LocalDateTime localDateTime = LocalDateTime.now();
-
         // Buffer Expenses and Budgets
         List<Expense> expenseList = expenseRepository.findByUserId(userId);
         List<Budget> budgetList = budgetRepository.findByUserId(userId);
 
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+
         // Calcualte value of Expenses for every kategorie in the ongoing month
         for(Budget budget : budgetList) {
 
-            double valueOfExpenses = ErfolgeService.getValueExpensesWithMonthOffset(0, localDateTime, expenseList, budget);
+            double valueOfExpenses = ErfolgeService.getValueExpensesWithMonthOffset(0, firstDateOfOngoingMonth, expenseList, budget);
 
             ausgabeJeKategorieAktuellerMonatDTOList.add(new AusgabeJeKategorieAktuellerMonatDTO(budget.kategorie, valueOfExpenses));
         }
@@ -67,12 +69,12 @@ public class UebersichtService implements UebersichtServiceInterface {
         // Initialize target expense list per kategorie in the last 6 months
         List<AusgabeJeKategorieHalbesJahrDTO> ausgabeJeKategorieHalbesJahrDTOList = new ArrayList<>();
 
-        // Get Local DateTime as starting point for Month Offset Calculation
-        LocalDateTime localDateTime = LocalDateTime.now();
-
         // Buffer Expenses and Budgets
         List<Expense> expenseList = expenseRepository.findByUserId(userId);
         List<Budget> budgetList = budgetRepository.findByUserId(userId);
+
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
 
         // Static Date-Formatter, used to manipulate Date-display
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM");
@@ -85,11 +87,11 @@ public class UebersichtService implements UebersichtServiceInterface {
             // Calculate Value for the last 6 months
             for(int monthOffset = 5; monthOffset >= 0; monthOffset--) {
 
-                double valueOfExpenses = ErfolgeService.getValueExpensesWithMonthOffset(monthOffset, localDateTime, expenseList, budget);
+                double valueOfExpenses = ErfolgeService.getValueExpensesWithMonthOffset(monthOffset, firstDateOfOngoingMonth, expenseList, budget);
 
-                final LocalDateTime adjustedDateTime = localDateTime.minusMonths(monthOffset);
+                final LocalDate adjustedDate = firstDateOfOngoingMonth.minusMonths(monthOffset);
 
-                ausgabeJeKategorieMonatList.add(new AusgabeJeKategorieAktuellerMonatDTO(adjustedDateTime.format(dateFormatter), valueOfExpenses));
+                ausgabeJeKategorieMonatList.add(new AusgabeJeKategorieAktuellerMonatDTO(adjustedDate.format(dateFormatter), valueOfExpenses));
             }
             ausgabeJeKategorieHalbesJahrDTOList.add(new AusgabeJeKategorieHalbesJahrDTO(budget.kategorie, ausgabeJeKategorieMonatList));
         }
@@ -110,6 +112,9 @@ public class UebersichtService implements UebersichtServiceInterface {
         // Get Local DateTime as starting point for Month Offset Calculation
         LocalDateTime localDateTime = LocalDateTime.now();
 
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+
         // Buffer Expenses and Budgets
         List<Expense> expenseList = expenseRepository.findByUserId(userId);
         List<Budget> budgetList = budgetRepository.findByUserId(userId);
@@ -117,7 +122,7 @@ public class UebersichtService implements UebersichtServiceInterface {
         // Calculate  for every kategorie of expenses
         for(Budget budget : budgetList) {
 
-            double valueOfExpenses = ErfolgeService.getValueExpensesWithMonthOffset(0, localDateTime, expenseList, budget);
+            double valueOfExpenses = ErfolgeService.getValueExpensesWithMonthOffset(0, firstDateOfOngoingMonth, expenseList, budget);
 
             double percentage = 0d;
 

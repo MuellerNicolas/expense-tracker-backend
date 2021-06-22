@@ -57,4 +57,8 @@ public class ExpenseService implements ExpenseServiceInterface {
         expenseRepository.deleteById(expenseId);
     };
 
+    public ExpenseService(ExpenseRepository expenseRepository) {
+        this.expenseRepository = expenseRepository;
+    }
+
 }
