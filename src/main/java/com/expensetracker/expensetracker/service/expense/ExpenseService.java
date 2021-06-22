@@ -25,7 +25,7 @@ public class ExpenseService implements ExpenseServiceInterface {
      */
     @Override
     public List<Expense> findLatestExpenses(String userId) {
-        return expenseRepository.findTop10ByUserIdOrderByDatumDesc(userId);
+        return expenseRepository.findByUserIdOrderByDatumDesc(userId);
     }
 
     /**

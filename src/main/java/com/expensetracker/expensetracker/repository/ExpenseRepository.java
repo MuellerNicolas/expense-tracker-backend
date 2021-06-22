@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface ExpenseRepository extends MongoRepository<Expense, String> {
 
-    List<Expense> findTop10ByUserIdOrderByDatumDesc(String userId);
+    List<Expense> findByUserIdOrderByDatumDesc(String userId);
 
     List<Expense> findByUserId(String userId);
 

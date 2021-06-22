@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Model for Expense in Expense-Tracker
@@ -82,6 +83,19 @@ public class Expense {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Expense expense = (Expense) o;
+        return Objects.equals(expenseId, expense.expenseId) && Objects.equals(datum, expense.datum) && Objects.equals(name, expense.name) && Objects.equals(betrag, expense.betrag) && Objects.equals(kategorie, expense.kategorie) && Objects.equals(userId, expense.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(expenseId, datum, name, betrag, kategorie, userId);
     }
 }
 
