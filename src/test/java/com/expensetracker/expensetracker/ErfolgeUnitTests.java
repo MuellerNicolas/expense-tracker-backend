@@ -1,7 +1,14 @@
 package com.expensetracker.expensetracker;
 
+import com.expensetracker.expensetracker.model.Budget;
 import com.expensetracker.expensetracker.model.Expense;
+import com.expensetracker.expensetracker.model.User;
+import com.expensetracker.expensetracker.model.dto.BadgesDTO;
+import com.expensetracker.expensetracker.model.dto.BudgetStreakDTO;
+import com.expensetracker.expensetracker.repository.BudgetRepository;
 import com.expensetracker.expensetracker.repository.ExpenseRepository;
+import com.expensetracker.expensetracker.repository.UserRepository;
+import com.expensetracker.expensetracker.service.erfolge.ErfolgeService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,14 +38,24 @@ public class ErfolgeUnitTests {
     @Autowired
     private ExpenseRepository expenseRepository;
 
+    @Autowired
+    private BudgetRepository budgetRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
     private final String userId = "1";
 
     private Expense expenseToSave;
 
-    @BeforeEach
-    public void dataSetup() {
+    private ErfolgeService cut;
 
-        expenseToSave = new Expense(LocalDateTime.now(), "Fahrrad", 1600d, "1", userId );
+    @BeforeEach
+    void setUp() {
+
+        this.cut = new ErfolgeService(expenseRepository, budgetRepository, userRepository);
+
+        expenseToSave = new Expense(LocalDateTime.now(), "Fahrrad", 2600d, "Mobilität", userId );
 
     }
 
@@ -46,76 +65,159 @@ public class ErfolgeUnitTests {
     }
 
     @Test
-    public void AddExpense() {
+    public void StreakBudgetSeitErstellungEingehalten() {
 
         // given
+        User user = userRepository.findByUserId(userId);
+
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+        LocalDate firstDateOfMonthUserCreated = user.getDatumCreated().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+
+        long monateSeitAccountErstellung = 0;
+
+        for(; firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).isAfter(firstDateOfMonthUserCreated) || firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).equals(firstDateOfMonthUserCreated); monateSeitAccountErstellung++){}
+
+        // when
+        BudgetStreakDTO streak = cut.findBudgetStreak(userId);
+
+        // then
+        assertThat(streak.getMonateBudgetStreak()).isNotNull();
+        assertThat(streak.getMonateBudgetStreak()).isEqualTo(monateSeitAccountErstellung);
+
+    }
+
+    @Test
+    public void StreakBudget1MonatEingehalten() {
+
+        // given
+        User user = userRepository.findByUserId(userId);
+
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+        LocalDate firstDateOfMonthUserCreated = user.getDatumCreated().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+
+        expenseToSave = new Expense(LocalDateTime.now().minusMonths(1), "Fahrrad", 2600d, "Mobilität", userId );
         expenseRepository.save(expenseToSave);
 
         // when
-        Expense retrievedExpense = expenseRepository.findByExpenseId(expenseToSave.expenseId);
+        BudgetStreakDTO streak = cut.findBudgetStreak(userId);
 
         // then
-        assertThat(retrievedExpense.equals(expenseToSave));
+        assertThat(streak.getMonateBudgetStreak()).isNotNull();
+        assertThat(streak.getMonateBudgetStreak()).isEqualTo(1);
+
+    }
+
+    @Test
+    public void StreakBudget0MonateEingehalten() {
+
+        // given
+        User user = userRepository.findByUserId(userId);
+
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+        LocalDate firstDateOfMonthUserCreated = user.getDatumCreated().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+
+        expenseToSave = new Expense(LocalDateTime.now(), "Fahrrad", 2600d, "Mobilität", userId );
+        expenseRepository.save(expenseToSave);
+
+        // when
+        BudgetStreakDTO streak = cut.findBudgetStreak(userId);
+
+        // then
+        assertThat(streak.getMonateBudgetStreak()).isNotNull();
+        assertThat(streak.getMonateBudgetStreak()).isEqualTo(0);
+
+    }
+
+    @Test
+    public void BadgesBudgetSeitErstellungEingehalten() {
+
+        // given
+        User user = userRepository.findByUserId(userId);
+
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+        LocalDate firstDateOfMonthUserCreated = user.getDatumCreated().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+
+        long monateSeitAccountErstellung = 0;
+
+        for(; firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).isAfter(firstDateOfMonthUserCreated) || firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).equals(firstDateOfMonthUserCreated); monateSeitAccountErstellung++){}
+
+        // when
+        List<BadgesDTO> badgesDTOList = cut.findBadges(userId);
+
+        // then
+        assertThat(badgesDTOList).isNotNull();
+
+        Double monateeingehalten = badgesDTOList.stream().filter(badge -> badge.kategorie.equals("Mobilität")).findFirst().orElse(null).getMonateEingehaltenTotal();
+
+        assertThat(monateeingehalten).isEqualTo((double) monateSeitAccountErstellung);
 
 
     }
 
     @Test
-    public void UpdateExpense() {
+    public void BadgesBudget1MonatNichtEingehalten() {
 
         // given
-        expenseToSave.setBetrag(1800d);
+        User user = userRepository.findByUserId(userId);
+
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+        LocalDate firstDateOfMonthUserCreated = user.getDatumCreated().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+
+        long monateSeitAccountErstellung = 0;
+
+        for(; firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).isAfter(firstDateOfMonthUserCreated) || firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).equals(firstDateOfMonthUserCreated); monateSeitAccountErstellung++){
+
+        }
+
+        expenseToSave = new Expense(firstDateOfOngoingMonth.atStartOfDay(), "Fahrrad", 2600d, "Mobilität", userId );
         expenseRepository.save(expenseToSave);
 
         // when
-        Expense retrievedExpense = expenseRepository.findByExpenseId(expenseToSave.expenseId);
+        List<BadgesDTO> badgesDTOList = cut.findBadges(userId);
 
         // then
-        assertThat(retrievedExpense.getBetrag()).isEqualTo(expenseToSave.getBetrag());
+        assertThat(badgesDTOList).isNotNull();
+
+        Double monateeingehalten = badgesDTOList.stream().filter(badge -> badge.kategorie.equals("Mobilität")).findFirst().orElse(null).getMonateEingehaltenTotal();
+
+        assertThat(monateeingehalten).isEqualTo((double) monateSeitAccountErstellung-1);
 
     }
 
     @Test
-    public void DeleteExpense() {
+    public void BadgesBudgetJedenMonatNichtEingehalten() {
 
         // given
-        expenseRepository.save(expenseToSave);
+        User user = userRepository.findByUserId(userId);
 
-        // when
-        expenseRepository.deleteById(expenseToSave.expenseId);
-        Expense retrievedExpense = expenseRepository.findByExpenseId(expenseToSave.expenseId);
+        // Get Local DateTime as starting point for Month Offset Calculation
+        LocalDate firstDateOfOngoingMonth = LocalDateTime.now().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
+        LocalDate firstDateOfMonthUserCreated = user.getDatumCreated().with(TemporalAdjusters.firstDayOfMonth()).toLocalDate();
 
-        // then
-        assertThat(retrievedExpense).isNull();
+        long monateSeitAccountErstellung = 0;
 
-    }
-
-    @Test
-    public void GetLastEntries() {
-
-        // given
-        List<Expense> expenseToSaveList = new ArrayList<>();
-        for(double x = 0; x < 12; x++){
-            expenseToSave = new Expense(LocalDateTime.now(), "Fahrrad", x, "1", userId );
-            expenseToSaveList.add(expenseToSave);
+        for(; firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).isAfter(firstDateOfMonthUserCreated) || firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).equals(firstDateOfMonthUserCreated); monateSeitAccountErstellung++){
+            expenseToSave = new Expense(firstDateOfOngoingMonth.minusMonths(monateSeitAccountErstellung).atStartOfDay(), "Fahrrad", 2600d, "Mobilität", userId );
             expenseRepository.save(expenseToSave);
         }
 
         // when
-        List<Expense> retrievedExpenseList = expenseRepository.findByUserIdOrderByDatumDesc(userId);
+        List<BadgesDTO> badgesDTOList = cut.findBadges(userId);
 
         // then
-        // Assert that retrieved List is not empty
-        assertThat(retrievedExpenseList).isNotEmpty();
-        // Assert that retrieved amount of Expenses equals expected amount of Expenses
-        assertThat(expenseToSaveList.size()).isEqualTo(retrievedExpenseList.size());
-        // Assert that Expenses are ordered by Date descending
-        for(int index = 0; index < retrievedExpenseList.size()-1; index++) {
-            retrievedExpenseList.get(index).getDatum().isBefore(retrievedExpenseList.get(index+1).getDatum());
-        }
+        assertThat(badgesDTOList).isNotNull();
+
+        Double monateeingehalten = badgesDTOList.stream().filter(badge -> badge.kategorie.equals("Mobilität")).findFirst().orElse(null).getMonateEingehaltenTotal();
+
+        assertThat(monateeingehalten.equals(0));
+        assertThat(monateeingehalten).isEqualTo(0d);
+
 
     }
-
-
 
 }
