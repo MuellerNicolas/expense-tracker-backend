@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 public class User {
 
     @Id
-    private String userId;
-    private String name;
-    private String password;
-    private String email;
-    private LocalDateTime datumCreated;
+    public String userId;
+    public String name;
+    public String password;
+    public String email;
+    public LocalDateTime datumCreated;
 
     public User(String userId, String name, String password, String email, LocalDateTime datumCreated) {
         this.userId = userId;
