@@ -2,6 +2,7 @@ package com.expensetracker.expensetracker;
 
 import com.expensetracker.expensetracker.model.Expense;
 import com.expensetracker.expensetracker.repository.ExpenseRepository;
+import com.expensetracker.expensetracker.service.expense.ExpenseService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,12 +32,16 @@ public class ExpenseUnitTests {
 
     private final String userId = "1";
 
+    private ExpenseService cut;
+
     private Expense expenseToSave;
 
     @BeforeEach
     public void dataSetup() {
 
         expenseToSave = new Expense(LocalDateTime.now(), "Fahrrad", 1600d, "1", userId );
+
+        this.cut = new ExpenseService(expenseRepository);
 
     }
 
@@ -49,10 +54,10 @@ public class ExpenseUnitTests {
     public void AddExpense() {
 
         // given
-        expenseRepository.save(expenseToSave);
+        cut.saveOrUpdateExpense(expenseToSave);
 
         // when
-        Expense retrievedExpense = expenseRepository.findByExpenseId(expenseToSave.expenseId);
+        Expense retrievedExpense = cut.findExpenseById(expenseToSave.expenseId);
 
         // then
         assertThat(retrievedExpense.equals(expenseToSave));
@@ -65,10 +70,10 @@ public class ExpenseUnitTests {
 
         // given
         expenseToSave.setBetrag(1800d);
-        expenseRepository.save(expenseToSave);
+        cut.saveOrUpdateExpense(expenseToSave);
 
         // when
-        Expense retrievedExpense = expenseRepository.findByExpenseId(expenseToSave.expenseId);
+        Expense retrievedExpense = cut.findExpenseById(expenseToSave.expenseId);
 
         // then
         assertThat(retrievedExpense.getBetrag()).isEqualTo(expenseToSave.getBetrag());
@@ -79,11 +84,11 @@ public class ExpenseUnitTests {
     public void DeleteExpense() {
 
         // given
-        expenseRepository.save(expenseToSave);
+        cut.saveOrUpdateExpense(expenseToSave);
 
         // when
-        expenseRepository.deleteById(expenseToSave.expenseId);
-        Expense retrievedExpense = expenseRepository.findByExpenseId(expenseToSave.expenseId);
+        cut.deleteExpenseById(expenseToSave.expenseId);
+        Expense retrievedExpense = cut.findExpenseById(expenseToSave.expenseId);
 
         // then
         assertThat(retrievedExpense).isNull();
@@ -98,11 +103,11 @@ public class ExpenseUnitTests {
         for(double x = 0; x < 12; x++){
             expenseToSave = new Expense(LocalDateTime.now(), "Fahrrad", x, "1", userId );
             expenseToSaveList.add(expenseToSave);
-            expenseRepository.save(expenseToSave);
+            cut.saveOrUpdateExpense(expenseToSave);
         }
 
         // when
-        List<Expense> retrievedExpenseList = expenseRepository.findByUserIdOrderByDatumDesc(userId);
+        List<Expense> retrievedExpenseList = cut.findLatestExpenses(userId);
 
         // then
         // Assert that retrieved List is not empty

@@ -1,6 +1,5 @@
 package com.expensetracker.expensetracker;
 
-import com.expensetracker.expensetracker.model.Budget;
 import com.expensetracker.expensetracker.model.Expense;
 import com.expensetracker.expensetracker.model.User;
 import com.expensetracker.expensetracker.model.dto.BadgesDTO;
@@ -20,7 +19,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -52,9 +50,8 @@ public class ErfolgeUnitTests {
 
     @BeforeEach
     void setUp() {
-
+        expenseRepository.deleteAll();
         this.cut = new ErfolgeService(expenseRepository, budgetRepository, userRepository);
-
         expenseToSave = new Expense(LocalDateTime.now(), "Fahrrad", 2600d, "Mobilität", userId );
 
     }
