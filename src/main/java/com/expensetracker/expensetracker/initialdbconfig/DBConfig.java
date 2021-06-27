@@ -46,41 +46,41 @@ public class DBConfig {
     @ChangeSet(order= "003", id = "seedExpenses", author = "InitialConfig")
     public void seedExpenses(ExpenseRepository expenseRepository) {
         // Ausbildung und Studium
-        Expense expense1 = new Expense(LocalDateTime.now().minusMonths(6), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
+        Expense expense1 = new Expense(LocalDateTime.now().minusMonths(5), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
         expenseRepository.save(expense1);
-        Expense expense2 = new Expense(LocalDateTime.now().minusMonths(5), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
+        Expense expense2 = new Expense(LocalDateTime.now().minusMonths(4), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
         expenseRepository.save(expense2);
-        Expense expense3 = new Expense(LocalDateTime.now().minusMonths(4), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
+        Expense expense3 = new Expense(LocalDateTime.now().minusMonths(3), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
         expenseRepository.save(expense3);
-        Expense expense4 = new Expense(LocalDateTime.now().minusMonths(3), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
+        Expense expense4 = new Expense(LocalDateTime.now().minusMonths(2), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
         expenseRepository.save(expense4);
-        Expense expense5 = new Expense(LocalDateTime.now().minusMonths(2), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
+        Expense expense5 = new Expense(LocalDateTime.now().minusMonths(1), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
         expenseRepository.save(expense5);
-        Expense expense6 = new Expense(LocalDateTime.now().minusMonths(2), "Bücher", 70d, "Ausbildung und Studium", "1");
+        Expense expense6 = new Expense(LocalDateTime.now().minusMonths(1), "Bücher", 70d, "Ausbildung und Studium", "1");
         expenseRepository.save(expense6);
-        Expense expense15 = new Expense(LocalDateTime.now().minusMonths(1), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
+        Expense expense15 = new Expense(LocalDateTime.now(), "Semestergebühren", 60d, "Ausbildung und Studium", "1");
         expenseRepository.save(expense15);
 
         // Freizeit
-        Expense expense7 = new Expense(LocalDateTime.now().minusMonths(4), "Europapark", 120d, "Freizeit", "1");
+        Expense expense7 = new Expense(LocalDateTime.now().minusMonths(3), "Europapark", 120d, "Freizeit", "1");
         expenseRepository.save(expense7);
-        Expense expense8 = new Expense(LocalDateTime.now().minusMonths(3), "Ago", 140d, "Freizeit", "1");
+        Expense expense8 = new Expense(LocalDateTime.now().minusMonths(2), "Ago", 140d, "Freizeit", "1");
         expenseRepository.save(expense8);
 
         // Bekleidung
-        Expense expense9 = new Expense(LocalDateTime.now().minusMonths(3), "Anzug", 200d, "Bekleidung", "1");
+        Expense expense9 = new Expense(LocalDateTime.now().minusMonths(2), "Anzug", 200d, "Bekleidung", "1");
         expenseRepository.save(expense9);
-        Expense expense10 = new Expense(LocalDateTime.now().minusMonths(5), "Schuhe", 80d, "Bekleidung", "1");
+        Expense expense10 = new Expense(LocalDateTime.now().minusMonths(4), "Schuhe", 80d, "Bekleidung", "1");
         expenseRepository.save(expense10);
-        Expense expense11 = new Expense(LocalDateTime.now().minusMonths(0), "Schuhe", 80d, "Bekleidung", "1");
+        Expense expense11 = new Expense(LocalDateTime.now(), "Schuhe", 80d, "Bekleidung", "1");
         expenseRepository.save(expense11);
 
         // Infrastruktur
-        Expense expense12 = new Expense(LocalDateTime.now().minusMonths(2), "Handyvertrag", 15d, "Infrastruktur", "1");
+        Expense expense12 = new Expense(LocalDateTime.now().minusMonths(1), "Handyvertrag", 15d, "Infrastruktur", "1");
         expenseRepository.save(expense12);
-        Expense expense13 = new Expense(LocalDateTime.now().minusMonths(1), "Handyvertrag", 15d, "Infrastruktur", "1");
+        Expense expense13 = new Expense(LocalDateTime.now(), "Handyvertrag", 15d, "Infrastruktur", "1");
         expenseRepository.save(expense13);
-        Expense expense14 = new Expense(LocalDateTime.now().minusMonths(0), "Handyvertrag", 15d, "Infrastruktur", "1");
+        Expense expense14 = new Expense(LocalDateTime.now(), "Handyvertrag", 15d, "Infrastruktur", "1");
         expenseRepository.save(expense14);
 
     }
