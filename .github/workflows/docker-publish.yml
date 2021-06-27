@@ -85,4 +85,4 @@ jobs:
         run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASSWORD 
       - name: Push image to Docker Registry
-        run: docker push ${{secrets.DOCKER_USER}}/$IMAGE_NAME:$VERSION
+        run: docker push ${{secrets.DOCKER_USER}}/expense-tracker-backend:latest
