@@ -17,6 +17,10 @@ public class BadgesDTO {
         this.monateEingehaltenTotal = monateEingehaltenTotal;
     }
 
+    public BadgesDTO() {
+
+    }
+
     public String getId() {
         return id;
     }
